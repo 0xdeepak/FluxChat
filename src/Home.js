@@ -18,8 +18,12 @@ function Home() {
   const [targetName, setTargetName] = useState("");
 
 
-  useEffect(async function(){
-    let token = await user.getIdToken(true);
+  useEffect(function(){
+    async function fetchToken(){
+      let response = await user.getIdToken(true);
+      return response;
+    }
+    const token = fetchToken();
     let sock = io("https://salty-cove-84971.herokuapp.com/",{
       autoConnect: true,
       extraHeaders: {
