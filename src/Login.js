@@ -1,4 +1,3 @@
-import './App.css';
 import { useContext} from 'react';
 import {userContext} from './App';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';

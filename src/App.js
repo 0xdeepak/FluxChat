@@ -1,10 +1,8 @@
-import './App.css';
-import Login from './Login';
-import Home from './Home';
+import "./App.css";
 import React, { useState, useEffect} from 'react';
 import {firebase} from './utils/firebase';
-import { Switch, Route} from "react-router-dom";
 import axios from './utils/axios';
+import Routes from "./Routes";
 
 let userContext = React.createContext();
 
@@ -20,7 +18,6 @@ function App() {
           .then(function(idToken){
             //console.log(idToken);
             axios.defaults.headers["Authorization"] = `Bearer ${idToken}`;
-            console.log(axios.defaults.headers["Authorization"]);
 
           })
           .catch(function(error){
@@ -33,14 +30,7 @@ function App() {
   return (
     <div className="App">
       <userContext.Provider value={{user, setUser}}>
-        <Switch>
-          <Route path="/login" exact>
-            <Login />
-          </Route>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-        </Switch>
+        <Routes />
       </userContext.Provider>
     </div>
   );
