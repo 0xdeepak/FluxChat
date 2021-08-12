@@ -20,7 +20,7 @@ function Home() {
 
   useEffect(async function(){
     let token = await user.getIdToken(true);
-    let sock = io("http://localhost:5000/",{
+    let sock = io("https://salty-cove-84971.herokuapp.com/",{
       autoConnect: true,
       extraHeaders: {
         Authorization: `Bearer ${token}`
