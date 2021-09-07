@@ -17,24 +17,26 @@ function Home() {
   const [target, setTarget] = useState(false);
   const [targetName, setTargetName] = useState("");
 
+  
+  // eslint-disable-next-line
+  useEffect(async function(){
+    let token = await user.getIdToken(true);
 
-  useEffect(function(){
-    async function fetchToken(){
-      let response = await user.getIdToken(true);
-      return response;
-    }
-    const token = fetchToken();
     let sock = io("https://salty-cove-84971.herokuapp.com/",{
-      autoConnect: true,
       extraHeaders: {
-        Authorization: `Bearer ${token}`
+        Authorization: token
       }
     });
 
     sock.on("connect", function(){
-      setSocket(sock);
+      console.log("connected")
+      setSocket(sock)
     });
-
+    
+    sock.on("disconnect", function(reason){
+          console.log("disconnected");
+          setSocket(null);
+        });
     sock.on("message",function(payload){
       setMessages((messages) => {
         let gen = [...messages];
@@ -43,10 +45,11 @@ function Home() {
       })
     })
     
-    sock.on("disconnect", function(){
-      setSocket(null);
+    sock.on("connect_error", (err) => {
+      console.log(err);
     });
 
+    
   },[user]);
 
   const handleSubmit = function(){
