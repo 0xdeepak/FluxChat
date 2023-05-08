@@ -22,7 +22,7 @@ function Home() {
   useEffect(async function(){
     let token = await user.getIdToken(true);
 
-    let sock = io("https://salty-cove-84971.herokuapp.com/",{
+    let sock = io("https://server-zeta-gold.vercel.app/",{
       extraHeaders: {
         Authorization: token
       }
